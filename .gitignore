@@ -1,0 +1,20 @@
+# Simulation build artifacts
+obj_dir/
+work/
+simv
+simv_*
+*.vvp
+simv.vvp
+simv.daidir/
+*.daidir/
+csrc/
+vc_hdrs.h
+*.vcd
+*.vpd
+*.wlf
+*.log
+*.key
+ucli.key
+transcript
+.simvision/
+.DS_Store

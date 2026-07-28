@@ -10,3 +10,4 @@ Each day lives in its own folder (`DayN/`) containing a self-contained project w
 |-----|---------|--------------|--------|
 | 1 | Constrained-Random FIFO Scoreboard | Reference-model scoreboard, `$`-queue golden model, directed + constrained-random stimulus, functional coverage, SVA assertions | [Day1/](Day1/) |
 | 2 | UVM APB4 Register-File Verification | Full UVM agent (driver/monitor/sequencer), golden reference-model scoreboard, layered sequences, virtual sequencer + virtual sequences, functional coverage, APB protocol SVA | [Day2/](Day2/) |
+| 3 | UVM AXI4-Lite Register-Block Verification | Five-channel AXI4-Lite agent (driver/monitor/sequencer), golden reference-model scoreboard, layered + virtual sequences, functional coverage, AXI4-Lite protocol SVA (VALID/READY stability, response codes) | [Day3/](Day3/) |
