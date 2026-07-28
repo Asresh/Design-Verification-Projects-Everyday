@@ -8,3 +8,4 @@ Each day lives in its own folder (`DayN/`) containing a self-contained project w
 
 | Day | Project | Key concepts | Folder |
 |-----|---------|--------------|--------|
+| 1 | Constrained-Random FIFO Scoreboard | Reference-model scoreboard, `$`-queue golden model, directed + constrained-random stimulus, functional coverage, SVA assertions | [Day1/](Day1/) |
