@@ -1,0 +1,49 @@
+# a b sub z {inv,ovf,unf,inx}   -- result words are numpy (hardware IEEE-754 binary32) ground truth
+3f800000 40000000 0 40400000 0000  // 1.0 + 2.0 = 3.0
+3f800000 3f800000 1 00000000 0000  // 1.0 - 1.0 = +0 (exact cancellation)
+80000000 80000000 0 80000000 0000  // (-0) + (-0) = -0
+00000000 80000000 0 00000000 0000  // (+0) + (-0) = +0
+00000000 00000000 1 00000000 0000  // (+0) - (+0) = +0
+80000000 00000000 1 80000000 0000  // (-0) - (+0) = -0
+3f800000 33800000 0 3f800000 0001  // 1.0 + 2^-24 : exact tie, LSB even -> stays 1.0
+3f800001 33800000 0 3f800002 0001  // (1.0+1ulp) + 2^-24 : exact tie, LSB odd -> rounds up
+3f800000 34000000 0 3f800001 0000  // 1.0 + 2^-23 : exactly one ULP, exact
+3f800000 33c00000 0 3f800001 0001  // 1.0 + 1.5*2^-24 : above the tie -> rounds up
+3f800000 33800000 1 3f7fffff 0000  // 1.0 - 2^-24 : subtractive round, needs guard bit
+71800000 0d800000 0 71800000 0001  // 2^100 + 2^-100 : 200-bit alignment, sticky only
+71800000 0d800000 1 71800000 0001  // 2^100 - 2^-100 : sticky forces round-down
+7f7fffff 00000001 0 7f7fffff 0001  // maxfinite + minsubnormal : sticky, no change
+3f800000 3f7fffff 1 33800000 0000  // 1.0 - (1.0-1ulp) : 23-bit cancellation
+40000000 3fffffff 1 34000000 0000  // 2.0 - nextbelow(2.0) : full left normalise
+00000001 00000001 0 00000002 0000  // minsub + minsub = 2*minsub
+007fffff 00000001 0 00800000 0000  // maxsub + minsub = minnormal (carries into normal)
+00800000 00000001 1 007fffff 0000  // minnormal - minsub = maxsubnormal (drops out of normal)
+00000001 00000001 1 00000000 0000  // minsub - minsub = +0
+00800000 00800000 1 00000000 0000  // minnormal - minnormal = +0
+00800001 00800000 1 00000001 0000  // (minnormal+1ulp) - minnormal = minsubnormal (drops out of normal)
+24000000 a3ffffff 0 18000000 0000  // near-cancelling normals -> 24-bit left normalise, exact
+007fffff 007fffff 0 00fffffe 0000  // maxsub + maxsub : two subnormals carry into a normal
+00400000 00400000 0 00800000 0000  // midsub + midsub : subnormal doubling stays subnormal
+00800000 007fffff 1 00000001 0000  // minnormal - maxsub : smallest subnormal step
+7f7fffff 7f7fffff 0 7f800000 0101  // maxfinite + maxfinite = +inf (overflow)
+7f7fffff 7f7fffff 1 00000000 0000  // maxfinite - maxfinite = +0
+ff7fffff 7f7fffff 0 00000000 0000  // -maxfinite + maxfinite = +0
+7f7fffff 73000000 0 7f800000 0101  // maxfinite + 2^103 : rounds up over the top -> inf
+7f7ffffe 73000000 0 7f7ffffe 0001  // just below maxfinite + 2^103 : rounds up, stays finite
+3fffffff 33000000 0 3fffffff 0001  // nextbelow(2.0) + 2^-25 : round-up carries into exp++
+7f800000 ff800000 0 7fc00000 1000  // (+inf) + (-inf) = qNaN, INVALID
+7f800000 7f800000 1 7fc00000 1000  // (+inf) - (+inf) = qNaN, INVALID
+7f800000 7f800000 0 7f800000 0000  // (+inf) + (+inf) = +inf
+7f800000 3f800000 0 7f800000 0000  // (+inf) + 1.0 = +inf
+3f800000 ff800000 0 ff800000 0000  // 1.0 + (-inf) = -inf
+ff800000 3f800000 1 ff800000 0000  // (-inf) - 1.0 = -inf
+7f800000 00000000 0 7f800000 0000  // (+inf) + 0 = +inf
+7fc00000 3f800000 0 7fc00000 0000  // qNaN + 1.0 = qNaN, no flags
+3f800000 7fc00000 1 7fc00000 0000  // 1.0 - qNaN = qNaN, no flags
+7f800001 3f800000 0 7fc00000 1000  // sNaN + 1.0 = qNaN, INVALID
+7f800001 7f800000 0 7fc00000 1000  // sNaN + inf = qNaN, INVALID
+7fc00000 7f800000 0 7fc00000 0000  // qNaN + inf = qNaN (NaN wins over inf)
+00000000 3f800000 0 3f800000 0000  // 0 + 1.0 = 1.0
+3f800000 00000000 1 3f800000 0000  // 1.0 - 0 = 1.0
+00000000 3f800000 1 bf800000 0000  // 0 - 1.0 = -1.0
+bf800000 00000000 0 bf800000 0000  // -1.0 + 0 = -1.0
