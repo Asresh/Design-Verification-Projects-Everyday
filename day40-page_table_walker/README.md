@@ -90,6 +90,8 @@ The request and memory agents are both active because a PTW must be verified aga
 
 Real waveform captured from the portable Icarus regression. It shows request acceptance, stalled PTE requests, delayed PTE responses, level-1 and level-0 activity, successful 4 KiB/4 MiB translations, and classified fault responses.
 
+The captured regression completed 206 self-checked walks: 95 successful translations (48 level-1 and 47 level-0 leaves), 52 invalid-PTE faults, 58 permission faults, and one directed misaligned-superpage fault, with zero mismatches.
+
 ## How checking works
 
 When a request handshakes, the scoreboard computes `root_base + VPN1*4`. It compares the first observed PTE request with that address and interprets the returned PTE independently. A pointer causes a second expected address, `next_table_base + VPN0*4`; a leaf causes permission, alignment, and address-formation checks. For a level-1 leaf, the low 22 virtual-address bits become the page offset; for a level-0 leaf, the low 12 bits do. The final response must match physical address, fault flag, fault code, and leaf level exactly.
