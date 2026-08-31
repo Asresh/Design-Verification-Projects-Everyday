@@ -5,7 +5,7 @@
 
 This project verifies a synthesizable built-in self-test (BIST) controller for an SRAM. When software or power-on logic pulses `start`, the controller walks every address in ascending and descending order, writes known backgrounds, reads them back, and reports the first mismatch with its address, expected data, and actual data. The memory remains outside the DUT so the verification environment can vary latency, backpressure, initial contents, and injected defects independently.
 
-The project was selected from current semiconductor DV requirements. NVIDIA's current ASIC Verification Engineer opening calls out memory-controller experience, SystemVerilog/UVM, functional-coverage closure, X-propagation, gate-level simulation, and scripting. Current Apple and NVIDIA roles also emphasize reusable UVM environments, reference models, constrained random, assertions, and waveform debug. March C- turns those job requirements into a small but realistic memory-verification exercise without claiming to model a proprietary product.
+The project was selected from current semiconductor DV requirements. NVIDIA's Senior Memory Controller Verification Engineer opening, listed as posted two days before this project was prepared, calls out SystemVerilog/UVM, memory-controller experience, testbenches, BFMs, checkers, monitors, random stimulus, regressions, and coverage closure; its published U.S. base-pay range reaches $264,500. Current Apple roles also emphasize reusable UVM environments, reference models, constrained random, assertions, coverage, and waveform debug. March C- turns those job requirements into a small but realistic memory-verification exercise without claiming to model a proprietary product.
 
 ## Verification goal
 
@@ -139,5 +139,5 @@ make clean
 
 ## Industry references
 
-- [NVIDIA — ASIC Verification Engineer](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/ASIC-Verification-Engineer_JR2019596) — memory-controller experience, UVM, coverage closure, X-propagation, and GLS.
+- [NVIDIA — Senior Memory Controller Verification Engineer](https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/Senior-Memory-Controller-Verification-Engineer_JR2018502) — SystemVerilog/UVM, memory-controller verification, checkers/monitors/random stimulus, regressions, and coverage closure (listed as posted two days ago; accessed August 31, 2026).
 - [Apple — Design Verification Engineer](https://jobs.apple.com/en-us/details/200658028-0157/design-verification-engineer) — reusable UVM, reference models, constrained random, SVA, coverage, and Python automation (posted June 11, 2026; accessed August 31, 2026).
